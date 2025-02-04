@@ -13,3 +13,5 @@ I have documented my process of solving these challenges in this repository. I t
 | No  | Name                             |
 | --- | -------------------------------- |
 | 1   | [Basic Logic](/Basic%20Logic.md) |
+| 2   | [Arithmetic](/Arithmetic.md)     |
+| 3   | [Memory](/Memory.md)             |
