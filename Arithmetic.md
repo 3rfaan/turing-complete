@@ -11,7 +11,7 @@ We could check for all possibilities with `AND` gates. But there is a shorter so
 3. Check if either **A** or **B** and **C** or **D** are **1**. Meaning if any of the first two bits are **1** and any of the last two bits are **1** then at least two inputs are **1**, so the condition is fulfilled.
 4. Connect all of the previous conditions to an `OR` gate, because if there are more than 2 inputs **1** then we still output **1**.
 
-![Double Trouble](./assets/basic_logic/double_trouble.png)
+![Double Trouble](./assets/arithmetic/double_trouble.png)
 
 ## Odd Number Of Signals
 
@@ -26,7 +26,7 @@ So we `XOR` the first two input bits and then `XOR` the last two input bits. Thi
 
 Which means we now have two outputs. If only one of the two outputs is **1**, that means we have a odd number of signals. We can check this by connecting the two outputs to another `XOR` gate:
 
-![Odd Number Of Signals](./assets/basic_logic/odd_number_of_signals.png)
+![Odd Number Of Signals](./assets/arithmetic/odd_number_of_signals.png)
 
 ## Counting Signals
 
@@ -49,7 +49,7 @@ If there are 3 active signals, then [1's bit](#1s-bit) will handle the 1's bit.
 
 If there are 4 active signals, then all we have to check if **A** and **B** `AND` **C** and **D** are all active. We do this by chaining `AND` gates together.
 
-![Counting Signals](./assets/basic_logic/counting_signals.png)
+![Counting Signals](./assets/arithmetic/counting_signals.png)
 
 ## Double The Number
 
@@ -59,7 +59,7 @@ Binary is also called **base 2**. That means each place represents a power of 2 
 
 The last bit (128) is connected to the first bit (1) to account for overflow.
 
-![Double The Number](./assets/basic_logic/double_the_number.png)
+![Double The Number](./assets/arithmetic/double_the_number.png)
 
 ## Half Adder
 
@@ -80,7 +80,7 @@ Here's the truth table:
 
 The **sum** emulates the behaviour of an `XOR` gate while the **carry** emulates that of an `AND` gate. We just have to combine the two:
 
-![Half Adder](./assets/basic_logic/half_adder.png)
+![Half Adder](./assets/arithmetic/half_adder.png)
 
 ## Full Adder
 
@@ -104,7 +104,7 @@ In case all 3 input signals are active, then **sum** and **carry** output **1**.
 | 0   | 1   | 1   | 0   | 1     |
 | 1   | 1   | 1   | 1   | 1     |
 
-![Full Adder](./assets/basic_logic/full_adder.png)
+![Full Adder](./assets/arithmetic/full_adder.png)
 
 ## Byte NOT
 
@@ -112,13 +112,13 @@ We've already created a `NOT` gate but for a single bit. This time, our goal is 
 
 The `NOT` gate just inverts the bits. Meaning when we pass a byte to the **Byte Splitter**, any input signal that is **0** will be **1** and any signal that is **1** will be **0**. We just pass each bit through a `NOT` gate and then collect it using the **8 Bit Maker** component.
 
-![Byte NOT](./assets/basic_logic/byte_not.png)
+![Byte NOT](./assets/arithmetic/byte_not.png)
 
 ## Byte OR
 
 Likewise, the `OR` gate we built only operates on single bits. When operating with bytes, we have to take the two bytes and split it into bits. Then we compare each bit from the first byte with each bit from the second byte and passing it through the 1-bit `OR` gate. In the end we output the result of all these `OR` operations by converting the bits back to a byte using the **8 Bit Maker** component.
 
-![Byte OR](./assets/basic_logic/byte_or.png)
+![Byte OR](./assets/arithmetic/byte_or.png)
 
 ## Adding Bytes
 
@@ -133,7 +133,7 @@ As input we get **two bytes** (2 x 8 bits) and a single bit **carry** input. The
 5. Pass the **carry** to the next full adder which adds the next two bits of the two numbers.
 6. In the end if there is a carry pass it to the **carry output**.
 
-![Adding Bytes](./assets/basic_logic/adding_bytes.png)
+![Adding Bytes](./assets/arithmetic/adding_bytes.png)
 
 ## Signed Negator
 
@@ -154,4 +154,49 @@ First we invert all the bits of the input with the `NOT` (8 bit) gate. We then p
 
 When input is **2**, output will be **-2** for example.
 
-![Signed Negator](./assets/basic_logic/signed_negator.png)
+![Signed Negator](./assets/arithmetic/signed_negator.png)
+
+## Logic Engine
+
+In this level we will build a small logic engine. Our engine takes a 2-bit **instruction code** and two bytes as input.
+
+### Instructions
+
+| Code | Instruction |
+| ---- | ----------- |
+| 00   | `OR`        |
+| 01   | `NAND`      |
+| 10   | `NOR`       |
+| 11   | `AND`       |
+
+Let's take a look at the manual and learn about [De Morgan's Laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws):
+
+![De Morgan's Laws](./assets/arithmetic/de_morgans_laws.png)
+
+We already have an 8-bit `OR` gate. With this gate we can build all other gates required for the instructions above.
+
+We will also use a new component: The **8 Bit Mux** (8-bit multiplexer).
+
+![8 Bit Mux](./assets/arithmetic/8_bit_mux.png)
+
+The multiplexer component takes a byte which determines if **Input 1** or **Input 2** will get passed to the output. If this bit is **0** then **Input 1** is chosen, otherwise **Input 2**.
+
+Let's start with the `OR` instruction. This one is easy because we already have the 8-bit `OR` gate:
+
+![Logic Engine OR](./assets/arithmetic/logic_engine_1.png)
+
+Now we implement the second instruction: `NAND` with a binary code of **01**. De Morgan's laws state that in order to implement a `NAND` gate from an `OR` gate, we just have to invert both of the inputs:
+
+![Logic Engine NAND](./assets/arithmetic/logic_engine_2.png)
+
+Notice that we now take the instruction byte and split it into bits. If the first bit is **0**, then we want to pass the `OR` gate signal through the **8 Bit Mux**, otherwise if the first bit is **1** we pass the `NAND` signal we just built.
+
+Before we implement the next two instructions, `NOR` and `AND`, let's just pass the signal through another `MUX` if the second instruction bit is **0**. That means the instruction is either `OR` (00) or `NAND` (01) and we just pass the signal:
+
+![Logic Engine OR/NAND](./assets/arithmetic/logic_engine_3.png)
+
+All there is left now is to implement the `NOR` and `AND` instructions. The good news is that this is done through a single signal.
+
+This is because going from `OR` to `NOR` we just invert the output of the `OR` gate. Likewise going from `NAND` to `AND` is again just inverting the output of `NAND`. The first `MUX` already sets the condition for `OR` and `AND`, so all we have to do now is take the output from `MUX` and invert it using a 8-bit `NOT` gate:
+
+![Logic Engine NOR/AND](./assets/arithmetic/logic_engine_4.png)
