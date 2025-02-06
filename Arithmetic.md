@@ -156,6 +156,50 @@ When input is **2**, output will be **-2** for example.
 
 ![Signed Negator](./assets/arithmetic/signed_negator.png)
 
+## 1 Bit Decoder
+
+The assignment in this level is to build a 1-bit decoder. A _decoder_ is a circuit that takes a binary input and "decodes\* it into a specific output. In our context, it takes lights up only one single output line depending on the input.
+
+For example:
+
+- If the input is 00, the **first** output line lights up.
+- If the input is 01, the **second** output line lights up.
+- If the input is 10, the **third** output line lights up.
+
+And so on.
+
+This is ideal to determine specific actions for a specific input.
+
+In this case we want this behaviour:
+
+| In  | Out 1 | Out 2 |
+| --- | ----- | ----- |
+| 0   | 1     | 0     |
+| 1   | 0     | 1     |
+
+In other words: If **Input** is **0**, turn on **Output 1**. If **Input** is **1**, turn on **Output 2**.
+
+![1 Bit Decoder](./assets/memory/1_bit_decoder.png)
+
+## 3 Bit Decoder
+
+This time, we want to encode 3 bits. With 3 bits there are 8 different possibilities:
+
+| In 1 | In 2 | In 3 | Desired bit |
+| ---- | ---- | ---- | ----------- |
+| 0    | 0    | 0    | 1 (0001)    |
+| 1    | 0    | 0    | 2 (0010)    |
+| 0    | 1    | 0    | 3 (0011)    |
+| 1    | 1    | 0    | 4 (0100)    |
+| 0    | 0    | 1    | 5 (0101)    |
+| 1    | 0    | 1    | 6 (0110)    |
+| 0    | 1    | 1    | 7 (0111)    |
+| 1    | 1    | 1    | 8 (1111)    |
+
+There is possibly no other way than to just bruteforce each possible comination. For, this we use `AND` and `NOT` gates.
+
+![3 Bit Decoder](./assets/memory/3_bit_decoder.png)
+
 ## Logic Engine
 
 In this level we will build a small logic engine. Our engine takes a 2-bit **instruction code** and two bytes as input.
