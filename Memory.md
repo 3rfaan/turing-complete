@@ -153,3 +153,60 @@ Also, we connect **Input 0** to the **enable** pin in the **Output** component. 
 Then we connect **Input 1** to all of the **1 Bit Memory** "**Save enable**" pins. This is to ensure that only bits get saved when **Input 1** is **1** (SAVE).
 
 ![Saving Bytes](./assets/memory/saving_bytes.png)
+
+## Little Box
+
+In this level, we will build a circuit which can **SAVE** to and **LOAD** from 4 different bytes of memory.
+
+We get the following inputs:
+
+1. A 1-bit input: **LOAD**, if **0**, don't load the value (output it), otherwise load it
+2. A 1-bit input: **SAVE**, if **0**, don't save the value, otherwise save it
+3. A 1-bit input: **A OR B**, if **0** output to register name **A**, otherwise **B**
+4. A 1-bit input: **0 OR 1**, if **0** output to register number **0**, otherwise **1**
+5. A 8-bit input: **VALUE**, 8-bit value to be saved or loaded
+
+Say **SAVE** is **1** and **A OR B** is **1** (B) and **0 OR 1** is **0**, then we save **VALUE** to register **B0**.
+
+Let's first determine the right register. We can use a **1 Bit Decoder** for that.
+
+![Little Box 1](./assets/memory/little_box_1.png)
+
+We have to ensure that **VALUE** is only written to the right register we have to ensure three things:
+
+1. Determine register name: **A** or **B**.
+2. Determine register number: **0** or **1**.
+3. Is **SAVE** enabled?
+
+For that let's use three pin `AND` gates:
+
+![Little Box 2](./assets/memory/little_box_2.png)
+
+Now the value can only be saved if all three conditions are fulfilled. This is ensured by the `AND` gates.
+
+In the [last level](#saving-bytes), we received a new component: the **8 Bit Register**:
+
+![Little Box 3](./assets/memory/little_box_3.png)
+
+As we've established: Only one of the four `AND` gates will output **1**. So we pass this signal to the **8 Bit Register** pin **Save**. The **LOAD** 1-bit input is connected to the **Load** pin of the registers and also to the output. Then all there is left is passing **VALUE** to the **Save value** pin of the registers.
+
+![Little Box 4](./assets/memory/little_box_4.png)
+
+The last thing to do is to determine from which register we will output the value. Do you remember the **8 Bit Mux** component? If the enable pin is **0** we take the first input, otherwise the second. This is perfect for this use case!
+
+Let's determine which register number first because the registers are in this order:
+
+1. **A0**
+2. **A1**
+3. **B0**
+4. **B1**
+
+We just connect the signal from **A OR B** to the `MUX` and pass the two **A** registers. Then we do the same for the two **B** registers.
+
+![Little Box 5](./assets/memory/little_box_5.png)
+
+Ok, now we have the register number. We also need to determine the register name (**A**/**B**). Let's use another `MUX` for that.
+
+After all this, we have determine which signal should be outputted. This is the final result of my version of **Little Box**:
+
+![Little Box 6](./assets/memory/little_box_6.png)

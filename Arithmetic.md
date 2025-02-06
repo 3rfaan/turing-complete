@@ -187,16 +187,16 @@ This time, we want to encode 3 bits. With 3 bits there are 8 different possibili
 
 | In 1 | In 2 | In 3 | Desired bit |
 | ---- | ---- | ---- | ----------- |
-| 0    | 0    | 0    | 1 (0001)    |
-| 1    | 0    | 0    | 2 (0010)    |
-| 0    | 1    | 0    | 3 (0011)    |
-| 1    | 1    | 0    | 4 (0100)    |
-| 0    | 0    | 1    | 5 (0101)    |
-| 1    | 0    | 1    | 6 (0110)    |
-| 0    | 1    | 1    | 7 (0111)    |
-| 1    | 1    | 1    | 8 (1111)    |
+| 0    | 0    | 0    | 1           |
+| 1    | 0    | 0    | 2           |
+| 0    | 1    | 0    | 3           |
+| 1    | 1    | 0    | 4           |
+| 0    | 0    | 1    | 5           |
+| 1    | 0    | 1    | 6           |
+| 0    | 1    | 1    | 7           |
+| 1    | 1    | 1    | 8           |
 
-There is possibly no other way than to just bruteforce each possible comination. For, this we use `AND` and `NOT` gates.
+There is possibly no other way than to just bruteforce each possible combination. For, this we use `AND` and `NOT` gates.
 
 ![3 Bit Decoder](./assets/memory/3_bit_decoder.png)
 
