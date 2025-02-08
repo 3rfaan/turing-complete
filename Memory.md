@@ -210,3 +210,26 @@ Ok, now we have the register number. We also need to determine the register name
 After all this, we have determine which signal should be outputted. This is the final result of my version of **Little Box**:
 
 ![Little Box 6](./assets/memory/little_box_6.png)
+
+## Counter
+
+We've reached the last level in this chapter! Our goal is to build a simple counter.
+
+We get two inputs:
+
+1. 1-bit input: **ACTION**, if **0** then **COUNT** (add 1 to previous accumulator), else **OVERWRITE**.
+2. 8-bit input: **VALUE**, 8-bit value to overwrite
+
+Let's remember how we store values. Yes, we use the **8 Bit Register** component again to store the current value. Let's use the `ON` component to permanently activate the **Load** and **Save** pins of the component. Then the output of the **8 Bit Register** should go directly to the output.
+
+![Counter 1](./assets/memory/counter_1.png)
+
+Let's start with **OVERWRITE**. If the **ACTION** input is **1**, then we should overwrite the current value in the register with **VALUE**. Let's use the `MUX` component for that:
+
+![Counter 2](./assets/memory/counter_2.png)
+
+If **OVERWRITE** is **0**, then we should count normally. That means we take the output of the **8 Bit Register** and add 1 to it using the `ADD` component. Then we pass the result to the `MUX` (Input 1). If **ACTION** is off, the `MUX` will choose this signal.
+
+To add 1, we just pass the current value in the register and 1 bit ( the `ON` component) to the `ADD` component.
+
+![Counter 3](./assets/memory/counter_3.png)
