@@ -10,8 +10,9 @@ I have documented my process of solving these challenges in this repository. I t
 
 ## Solutions
 
-| No  | Name                             |
-| --- | -------------------------------- |
-| 1   | [Basic Logic](/Basic%20Logic.md) |
-| 2   | [Arithmetic](/Arithmetic.md)     |
-| 3   | [Memory](/Memory.md)             |
+| No  | Name                                       |
+| --- | ------------------------------------------ |
+| 1   | [Basic Logic](/Basic%20Logic.md)           |
+| 2   | [Arithmetic](/Arithmetic.md)               |
+| 3   | [Memory](/Memory.md)                       |
+| 4   | [CPU Architecture](/CPU%20Architecture.md) |

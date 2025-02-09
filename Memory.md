@@ -207,7 +207,7 @@ We just connect the signal from **A OR B** to the `MUX` and pass the two **A** r
 
 Ok, now we have the register number. We also need to determine the register name (**A**/**B**). Let's use another `MUX` for that.
 
-After all this, we have determine which signal should be outputted. This is the final result of my version of **Little Box**:
+After all this, we have determined which signal should be outputted. This is the final result of my version of **Little Box**:
 
 ![Little Box 6](./assets/memory/little_box_6.png)
 
