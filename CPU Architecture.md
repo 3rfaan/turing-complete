@@ -15,7 +15,7 @@ In this level we will expand on the [logic engine](Arithmetic.md#logic-engine) w
 | 100  | `ADD`       |
 | 101  | `SUB`       |
 
-We could just add two additional `MUX` components but I decided to redo the whole eninge. It will be easier to comprehend. This is because now we have some 8-bit components we didn't have when we built the logic engine. So instead of using `OR` and `NOT` gates to create `NAND`, `NOR` and `AND` we will just use the designated components:
+We could just add two additional `MUX` components but I decided to redo the whole engine. It will be easier to comprehend. This is because now we have some 8-bit components we didn't have when we built the original logic engine. So instead of using `OR` and `NOT` gates to create `NAND`, `NOR` and `AND` we will just use the designated components:
 
 ![Arithmetic Engine 1](./assets/cpu_architecture/arithmetic_engine_1.png)
 
